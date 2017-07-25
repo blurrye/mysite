@@ -12,4 +12,36 @@
     <p>
         <a href="{% url 'blog:post_share' post.id %}">分享</a>
     </p>
+
+    {#评论#}
+    {% with comments.count as total_comments %}
+        <h2>{{ total_comments }} comment {{ total_comments | pluralize }}</h2>
+    {% endwith %}
+
+    {% for comment in comments %}
+        <div class="comment">
+            <p class="info">
+                Comment {{ forloop.counter }} by {{ comment.name }}
+                {{ comment.created }}
+            </p>
+            {{ comment.body | linebreaks }}
+        </div>
+    {% empty %}
+        <p>还没有任何评论.</p>
+    {% endfor %}
+
+    {#最后，当表单提交成功后,你需要渲染表单或者显示一条成功的信息来代替之前的内容。#}
+    {% if new_comment %}
+        <h2>你的评论已经添加！</h2>
+    {% else %}
+        <h2>添加评论</h2>
+        <form action="." method="post">
+            {{ comment_form.as_p }}
+            {% csrf_token %}
+            <p>
+                <input type="submit" value="添加评论">
+            </p>
+        </form>
+    {% endif %}
+
 {% endblock %}
