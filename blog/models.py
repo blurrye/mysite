@@ -11,8 +11,8 @@ class PublishedManager(models.Manager):
 
 class Post(models.Model):
     STATUS_CHOICES = (
-        ('draft', 'Draft'),
-        ('published', 'Published'),
+        ('draft', '草稿'),
+        ('published', '发表'),
     )
     title = models.CharField(max_length=250, verbose_name='标题')
     slug = models.SlugField(max_length=250, unique_for_date='publish')
@@ -21,19 +21,19 @@ class Post(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
-
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft', verbose_name='状态')
+    
     objects = models.Manager()
     published = PublishedManager()
-
+    
     class Meta:
         verbose_name = '文章'
         verbose_name_plural = verbose_name
         ordering = ('-publish',)
-
+    
     def __str__(self):
         return self.title
-
+    
     def get_absolute_url(self):
         return reverse('blog:post_detail',
                        args=[

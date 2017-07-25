@@ -109,6 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = 'zh-hans'
 
 # TIME_ZONE = 'UTC'
+# 中国只有2个时区字符串, 一个是上海'Asia/Shanghai', 一个是重庆'Asia/Chongqing'
 TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
